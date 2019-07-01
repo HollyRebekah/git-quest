@@ -5,11 +5,19 @@ function Character(config) {
   this.maxHealth = config.maxHealth;
   this.dialogue = config.dialogue;
   this.level = config.level || 1;
+  this.baseAttack = config.level || 0;
+  this.baseDefense = config.level || 0;
 }
 
 Character.prototype = {
   get isAlive() {
     return this.health > 0;
+  },
+  get attackTotal() {
+    return this.baseAttack + this.level;
+  },
+  get defenseTotal() {
+    return this.baseDefense + this.level;
   },
   _takeDamage: function (damage) {
     this.health -= damage;
