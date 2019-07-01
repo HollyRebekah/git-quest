@@ -10,8 +10,8 @@ describe('enemy', () => {
       name: 'Townsperson',
       health: 10,
       maxHealth: 10,
-      _takeDamage: function (damage) {
-        this.health -= damage;
+      _takeDamage: function (experienceReward) {
+        this.health -= experienceReward;
       },
     };
     config = {
@@ -19,7 +19,7 @@ describe('enemy', () => {
       health: 10,
       maxHealth: 10,
       dialogue: 'rattle',
-      damage: 2,
+      experienceReward: 25,
     };
     enemy = new Enemy(config);
   });
@@ -34,17 +34,16 @@ describe('enemy', () => {
       expect(enemy.dialogue).toBe(config.dialogue);
     });
     it('has a damage rating', () => {
-      expect(enemy.damage).toBe(config.damage);
+      expect(enemy.attack(victim)).toBe(config.experienceReward);
     });
   });
   describe('attack', () => {
     it('can attack a target', () => {
       enemy.attack(victim);
-      expect(victim.health).toBe(victim.maxHealth - enemy.damage);
+      expect(victim.health).toBe(victim.maxHealth - enemy.experienceReward);
     });
     it('can describe its attack', () => {
-      const attackLine = `${enemy.name} lets out a ${enemy.dialogue}, and hits ${victim.name} for ${config.damage} damage!`;
-      expect(enemy.attack(victim)).toBe(attackLine);
+      expect(enemy.attack(victim)).toBe(config.experienceReward);
     });
   });
 });
